@@ -9,6 +9,7 @@ resources:
   - repo: self
 
 variables:
+  app-name: App Core
 
 stages:
   - stage: Build
