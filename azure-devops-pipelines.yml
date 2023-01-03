@@ -9,7 +9,7 @@ resources:
   - repo: self
 
 variables:
-  app-name: App Core
+  tag: '$(Build.BuildId)'
 
 stages:
   - stage: Build
