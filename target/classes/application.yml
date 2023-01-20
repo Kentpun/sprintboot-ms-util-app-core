@@ -1,0 +1,12 @@
+spring:
+  kafka:
+    bootstrap-servers: https://transaction-log.servicebus.windows.net:443/
+    security:
+      protocol: SASL_SSL
+    sasl:
+      mechanism: PLAIN
+      jaas:
+        config: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://transaction-log.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=QDb/unUfK/wo6WkMkRWPQcV/560NdfYQjhKFQH99dZ8=";
+    txnlog:
+      group-id: transaction-log-group
+      topic-id: transaction-log
