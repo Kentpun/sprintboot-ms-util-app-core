@@ -19,15 +19,9 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
-
-    @Value("${spring.kafka.txnlog.group-id}")
-    private String groupId;
-
-    public ConsumerFactory<String, String> consumerFactory(String groupId) {
+    public ConsumerFactory<String, String> consumerFactory(String groupId, String bootstrapServerAddress) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -36,15 +30,15 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(String groupId) {
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(String groupId, String bootstrapServerAddress) {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(groupId));
+        factory.setConsumerFactory(consumerFactory(groupId, bootstrapServerAddress));
         return factory;
     }
 
-    public ConsumerFactory<String, TxnLogEntity> txnLogConsumerFactory() {
+    public ConsumerFactory<String, TxnLogEntity> txnLogConsumerFactory(String groupId, String bootstrapServerAddress) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
@@ -52,11 +46,11 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> txnLogKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> txnLogKafkaListenerContainerFactory(String groupId, String bootstrapServerAddress) {
 
         ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(txnLogConsumerFactory());
+        factory.setConsumerFactory(txnLogConsumerFactory(groupId, bootstrapServerAddress));
         return factory;
     }
 

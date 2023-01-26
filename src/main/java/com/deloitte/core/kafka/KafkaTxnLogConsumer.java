@@ -1,5 +1,9 @@
 package com.deloitte.core.kafka;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -8,7 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CountDownLatch;
 
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 @Slf4j
+@Setter
+@Getter
 public class KafkaTxnLogConsumer {
 
     private String payload;

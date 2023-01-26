@@ -3,6 +3,10 @@ package com.deloitte.core.kafka;
 
 import com.deloitte.core.config.KafkaProducerConfig;
 import com.deloitte.core.entity.TxnLogEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +18,17 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @Component
 @Slf4j
+@Setter
+@Getter
 public class KafkaTxnLogProducer {
+
+    private String groupId;
+    private String boostrapServerAddress;
+
+    public KafkaTxnLogProducer(String groupId, String boostrapServerAddress){
+        this.groupId = groupId;
+        this.boostrapServerAddress = boostrapServerAddress;
+    }
 
     @Autowired
     @Qualifier("TxnLogKafkaTemplate")

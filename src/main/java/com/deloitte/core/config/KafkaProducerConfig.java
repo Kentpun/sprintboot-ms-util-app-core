@@ -18,16 +18,10 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
-
-    @Value("${spring.kafka.txnlog.group-id}")
-    private String groupId;
-
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, String> producerFactory(String bootstrapServerAddress) {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, "20971520");
@@ -36,14 +30,14 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, String> kafkaTemplate(String bootstrapServerAddress) {
+        return new KafkaTemplate<>(producerFactory(bootstrapServerAddress));
     }
 
     @Bean
-    public ProducerFactory<String, TxnLogEntity> txnLogProducerFactory(){
+    public ProducerFactory<String, TxnLogEntity> txnLogProducerFactory(String bootstrapServerAddress){
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
@@ -51,7 +45,7 @@ public class KafkaProducerConfig {
 
     @Bean
     @Qualifier("TxnLogKafkaTemplate")
-    public KafkaTemplate<String, TxnLogEntity> txnLogKafkaTemplate(){
-        return new KafkaTemplate<>(txnLogProducerFactory());
+    public KafkaTemplate<String, TxnLogEntity> txnLogKafkaTemplate(String bootstrapServerAddress){
+        return new KafkaTemplate<>(txnLogProducerFactory(bootstrapServerAddress));
     }
 }
