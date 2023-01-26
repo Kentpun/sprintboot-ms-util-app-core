@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -43,8 +44,8 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
-    @Bean
-    @Qualifier("TxnLogKafkaTemplate")
+    @Bean(name = "TxnLogKafkaTemplate")
+    @Scope("prototype")
     public KafkaTemplate<String, TxnLogEntity> txnLogKafkaTemplate(String bootstrapServerAddress){
         return new KafkaTemplate<>(txnLogProducerFactory(bootstrapServerAddress));
     }

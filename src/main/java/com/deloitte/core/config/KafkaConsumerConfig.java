@@ -6,6 +6,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -45,7 +46,8 @@ public class KafkaConsumerConfig {
                 new JsonDeserializer<>(TxnLogEntity.class));
     }
 
-    @Bean
+    @Bean(name = "TxnLogKafkaListenerFactory")
+    @Scope("prototype")
     public ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> txnLogKafkaListenerContainerFactory(String groupId, String bootstrapServerAddress) {
 
         ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> factory =

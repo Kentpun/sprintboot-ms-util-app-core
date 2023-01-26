@@ -6,12 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
-
+/*
+    This is a Kafka consumer template.
+    Should be implemented directly in each service.
+ */
 @Component
+@Scope("prototype")
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
