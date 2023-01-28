@@ -38,15 +38,27 @@ public class LuhnAlgorithmUtil {
         int lastBitNum = cardNo.charAt(nDigits - 1) - '0';
         // 前6位和后4位不变
         String preSixBitNum = cardNo.substring(0, 6);
+        int preNumSum = luhnSum(preSixBitNum);
         String lastForBitNum = cardNo.substring(12);
+        int lastNumSum = luhnSum(lastForBitNum);
+
         // 中间6位进行加密
         String midSixBitNum = cardNo.substring(6, 12);
 
         // 随机生成5位数字，第6位进行补位满足luhn算法
         String randomNum = String.valueOf((int)((Math.random()*9 + 1) * 10000));
+        int midNumSum = luhnSum(randomNum);
+        int sumNum = preNumSum + lastNumSum + midNumSum;
+
+        // 加密第6位数字=(150-sumNum)%10
+        int encryptSixBitNum = (150 - sumNum) % 10;
+        return preSixBitNum.concat(randomNum).concat(String.valueOf(encryptSixBitNum)).concat(lastForBitNum);
+    }
+
+    public static int luhnSum(String num) {
         int sumNum = 0;
-        for (int i = 0; i < randomNum.length(); i++) {
-            int bitNum = randomNum.charAt(i) - '0';
+        for (int i = 0; i < num.length(); i++) {
+            int bitNum = num.charAt(i) - '0';
             // 第1、3、5位需乘以2，每一位分别求和+第2、4位
             if (i % 2 == 0) {
                 int tempNum = bitNum * 2;
@@ -56,19 +68,17 @@ public class LuhnAlgorithmUtil {
                 sumNum += bitNum;
             }
         }
-
-        // 加密第6位数字=(50+校验位-sumNum)%10
-        int encryptSixBitNum = (50 + lastBitNum - sumNum) % 10;
-        return preSixBitNum.concat(randomNum).concat(String.valueOf(encryptSixBitNum)).concat(lastForBitNum);
+        return sumNum;
     }
 
-//    public static  void main(String[] args) {
-//        String cardnum = "9453677629008564"; // 9453677629008564   945367 376685 8564
-//        String luhnNum = getNewNum(cardnum);
-//        System.out.println(luhnNum);
-//        boolean result = checkLuhn(luhnNum);
-//        boolean result1 = checkLuhn(cardnum);
-//        System.out.println(result1);
-//        System.out.println(result);
-//    }
+    public static  void main(String[] args) {
+        String cardnum = "4263982640269299"; // 4263982640269299/9453677629008564   426398 264026 9299
+        String luhnNum = getNewNum(cardnum);
+        System.out.println(luhnNum);
+        boolean result1 = checkLuhn(cardnum);
+        boolean result = checkLuhn(luhnNum);
+        System.out.println(result1);
+        System.out.println(result);
+
+    }
 }
