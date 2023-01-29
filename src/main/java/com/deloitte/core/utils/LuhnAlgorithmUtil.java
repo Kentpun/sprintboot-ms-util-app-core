@@ -59,7 +59,7 @@ public class LuhnAlgorithmUtil {
         int sumNum = 0;
         for (int i = 0; i < num.length(); i++) {
             int bitNum = num.charAt(i) - '0';
-            // 第1、3、5位需乘以2，每一位分别求和+第2、4位
+            // 偶数位*2，对每一位分别求和
             if (i % 2 == 0) {
                 int tempNum = bitNum * 2;
                 sumNum = sumNum + tempNum / 10;
@@ -72,7 +72,7 @@ public class LuhnAlgorithmUtil {
     }
 
     public static  void main(String[] args) {
-        String cardnum = "4263982640269299"; // 4263982640269299/9453677629008564   426398 264026 9299
+        String cardnum = "6362970000457013"; // 4263982640269299/9453677629008564   426398 264026 9299
         String luhnNum = getNewNum(cardnum);
         System.out.println(luhnNum);
         boolean result1 = checkLuhn(cardnum);
