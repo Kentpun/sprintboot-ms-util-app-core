@@ -8,7 +8,6 @@ com/deloitte/core/response/SystemResponse.class
 com/deloitte/core/response/Response.class
 com/deloitte/core/entity/TxnLogEntity.class
 com/deloitte/core/response/Result$ResultBuilder.class
-com/deloitte/core/config/KafkaTopicConfig.class
 com/deloitte/core/kafka/KafkaTxnLogConsumer.class
 com/deloitte/core/response/Response$ResponseBuilder.class
 com/deloitte/core/utils/CallableUtil.class

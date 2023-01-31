@@ -29,14 +29,12 @@ import javax.annotation.Resource;
 @Getter
 public class KafkaTxnLogProducer {
 
-    private String groupId;
     private String boostrapServerAddress;
     private KafkaTemplate<String, TxnLogEntity> kafkaTemplate;
 
     private BeanFactory beanFactory;
 
-    public KafkaTxnLogProducer(String groupId, String boostrapServerAddress, BeanFactory beanFactory){
-        this.groupId = groupId;
+    public KafkaTxnLogProducer(String boostrapServerAddress, BeanFactory beanFactory){
         this.boostrapServerAddress = boostrapServerAddress;
         this.beanFactory = beanFactory;
         this.kafkaTemplate = (KafkaTemplate<String, TxnLogEntity>) beanFactory.getBean("txnLogKafkaTemplate", this.boostrapServerAddress);
