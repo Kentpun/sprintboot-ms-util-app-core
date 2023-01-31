@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -18,7 +20,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-@Component
+import javax.annotation.Resource;
+
+@Configuration
 @Scope("prototype")
 @Slf4j
 @Setter
@@ -29,13 +33,13 @@ public class KafkaTxnLogProducer {
     private String boostrapServerAddress;
     private KafkaTemplate<String, TxnLogEntity> kafkaTemplate;
 
-    @Autowired
     private BeanFactory beanFactory;
 
-    public KafkaTxnLogProducer(String groupId, String boostrapServerAddress){
+    public KafkaTxnLogProducer(String groupId, String boostrapServerAddress, BeanFactory beanFactory){
         this.groupId = groupId;
         this.boostrapServerAddress = boostrapServerAddress;
-        this.kafkaTemplate = (KafkaTemplate<String, TxnLogEntity>) beanFactory.getBean("TxnLogKafkaTemplate", this.boostrapServerAddress);
+        this.beanFactory = beanFactory;
+        this.kafkaTemplate = (KafkaTemplate<String, TxnLogEntity>) beanFactory.getBean("txnLogKafkaTemplate", this.boostrapServerAddress);
     }
 
     public void send(String topic, TxnLogEntity payload) {

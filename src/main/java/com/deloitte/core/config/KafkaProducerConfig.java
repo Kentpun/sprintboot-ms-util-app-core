@@ -20,6 +20,7 @@ import java.util.Map;
 public class KafkaProducerConfig {
 
     @Bean
+    @Scope("prototype")
     public ProducerFactory<String, String> producerFactory(String bootstrapServerAddress) {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
@@ -31,11 +32,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
+    @Scope("prototype")
     public KafkaTemplate<String, String> kafkaTemplate(String bootstrapServerAddress) {
         return new KafkaTemplate<>(producerFactory(bootstrapServerAddress));
     }
 
     @Bean
+    @Scope("prototype")
     public ProducerFactory<String, TxnLogEntity> txnLogProducerFactory(String bootstrapServerAddress){
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
@@ -44,7 +47,7 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
-    @Bean(name = "TxnLogKafkaTemplate")
+    @Bean(name = "txnLogKafkaTemplate")
     @Scope("prototype")
     public KafkaTemplate<String, TxnLogEntity> txnLogKafkaTemplate(String bootstrapServerAddress){
         return new KafkaTemplate<>(txnLogProducerFactory(bootstrapServerAddress));

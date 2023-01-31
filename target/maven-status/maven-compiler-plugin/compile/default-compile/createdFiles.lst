@@ -1,6 +1,7 @@
 com/deloitte/core/exception/BizException.class
 com/deloitte/core/config/KafkaProducerConfig.class
 com/deloitte/core/config/KafkaConsumerConfig.class
+com/deloitte/core/entity/TxnLogEntity$TxnLogEntityBuilder.class
 com/deloitte/core/response/R.class
 com/deloitte/core/kafka/KafkaTxnLogProducer.class
 com/deloitte/core/response/SystemResponse.class
