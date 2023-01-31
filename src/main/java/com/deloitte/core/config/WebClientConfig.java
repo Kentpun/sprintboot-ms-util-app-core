@@ -16,7 +16,7 @@ public class WebClientConfig {
         return webClient;
     }
 
-    @Bean(name = "tokenize-service")
+    @Bean(name = "tokenization-service")
     public WebClient tokenizeServiceWebClient() {
         WebClient webClient = WebClient.builder()
                 .baseUrl("http://payment-service.default.svc.cluster.local:9000")
