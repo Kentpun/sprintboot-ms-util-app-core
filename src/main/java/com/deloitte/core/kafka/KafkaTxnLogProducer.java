@@ -2,6 +2,7 @@ package com.deloitte.core.kafka;
 
 
 import com.deloitte.core.config.KafkaProducerConfig;
+import com.deloitte.core.entity.EventHubKafkaConnConfigEntity;
 import com.deloitte.core.entity.TxnLogEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,15 +30,15 @@ import javax.annotation.Resource;
 @Getter
 public class KafkaTxnLogProducer {
 
-    private String boostrapServerAddress;
+    private EventHubKafkaConnConfigEntity entity;
     private KafkaTemplate<String, TxnLogEntity> kafkaTemplate;
 
     private BeanFactory beanFactory;
 
-    public KafkaTxnLogProducer(String boostrapServerAddress, BeanFactory beanFactory){
-        this.boostrapServerAddress = boostrapServerAddress;
+    public KafkaTxnLogProducer(EventHubKafkaConnConfigEntity entity, BeanFactory beanFactory){
+        this.entity = entity;
         this.beanFactory = beanFactory;
-        this.kafkaTemplate = (KafkaTemplate<String, TxnLogEntity>) beanFactory.getBean("txnLogKafkaTemplate", this.boostrapServerAddress);
+        this.kafkaTemplate = (KafkaTemplate<String, TxnLogEntity>) beanFactory.getBean("txnLogKafkaTemplate", this.entity);
     }
 
     public void send(String topic, TxnLogEntity payload) {

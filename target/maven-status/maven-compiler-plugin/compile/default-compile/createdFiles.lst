@@ -1,5 +1,6 @@
 com/deloitte/core/exception/BizException.class
 com/deloitte/core/config/KafkaProducerConfig.class
+com/deloitte/core/entity/EventHubKafkaConnConfigEntity.class
 com/deloitte/core/config/KafkaConsumerConfig.class
 com/deloitte/core/entity/TxnLogEntity$TxnLogEntityBuilder.class
 com/deloitte/core/response/R.class
@@ -8,6 +9,7 @@ com/deloitte/core/response/SystemResponse.class
 com/deloitte/core/response/Response.class
 com/deloitte/core/entity/TxnLogEntity.class
 com/deloitte/core/response/Result$ResultBuilder.class
+com/deloitte/core/entity/EventHubKafkaConnConfigEntity$EventHubKafkaConnConfigEntityBuilder.class
 com/deloitte/core/kafka/KafkaTxnLogConsumer.class
 com/deloitte/core/response/Response$ResponseBuilder.class
 com/deloitte/core/utils/CallableUtil.class
