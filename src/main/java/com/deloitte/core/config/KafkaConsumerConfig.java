@@ -1,5 +1,6 @@
 package com.deloitte.core.config;
 
+import com.deloitte.core.entity.EventHubKafkaConnConfigEntity;
 import com.deloitte.core.entity.TxnLogEntity;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -37,22 +38,25 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    public ConsumerFactory<String, TxnLogEntity> txnLogConsumerFactory(String groupId, String bootstrapServerAddress) {
+    public ConsumerFactory<String, TxnLogEntity> txnLogConsumerFactory(String groupId, EventHubKafkaConnConfigEntity entity) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServerAddress);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, entity.getBootstrapServerAddress());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        props.put("sasl.mechanism", entity.getSaslMechanism());
+        props.put("sasl.jaas.config", entity.getSaslJassConfig());
+        props.put("security.protocol", entity.getSecurityProtocol());
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
                 new JsonDeserializer<>(TxnLogEntity.class));
     }
 
-    @Bean(name = "TxnLogKafkaListenerFactory")
-    @Scope("prototype")
-    public ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> txnLogKafkaListenerContainerFactory(String groupId, String bootstrapServerAddress) {
+    @Bean(name = "txnLogKafkaListenerContainerFactory")
+//    @Scope("prototype")
+    public ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> txnLogKafkaListenerContainerFactory(String groupId, EventHubKafkaConnConfigEntity entity) {
 
         ConcurrentKafkaListenerContainerFactory<String, TxnLogEntity> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(txnLogConsumerFactory(groupId, bootstrapServerAddress));
+        factory.setConsumerFactory(txnLogConsumerFactory(groupId, entity));
         return factory;
     }
 
