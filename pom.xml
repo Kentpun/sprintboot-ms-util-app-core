@@ -9,30 +9,18 @@
     <version>0.7.3</version>
     <packaging>jar</packaging>
 
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>dttdevops</id>-->
-<!--            <url>https://pkgs.dev.azure.com/dttdevops/_packaging/dttdevops/maven/v1</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
-        <distributionManagement>
-            <repository>
-                <id>dttdevops</id>
-                <url>https://pkgs.dev.azure.com/dttdevops/_packaging/dttdevops/maven/v1</url>
-                <releases>
-                    <enabled>true</enabled>
-                </releases>
-                <snapshots>
-                    <enabled>true</enabled>
-                </snapshots>
-            </repository>
-        </distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>dttdevops</id>
+            <url>https://pkgs.dev.azure.com/dttdevops/_packaging/dttdevops/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
