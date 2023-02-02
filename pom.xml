@@ -6,9 +6,21 @@
 
     <groupId>com.deloitte.cde</groupId>
     <artifactId>app-core</artifactId>
-    <version>0.7.2</version>
+    <version>0.7.3</version>
     <packaging>jar</packaging>
 
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>dttdevops</id>-->
+<!--            <url>https://pkgs.dev.azure.com/dttdevops/_packaging/dttdevops/maven/v1</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </distributionManagement>-->
         <distributionManagement>
             <repository>
                 <id>dttdevops</id>
@@ -28,12 +40,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>2.7.4</version>
-        </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
