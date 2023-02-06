@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.deloitte.core.config.ApiAutoConfig
+com.deloitte.core.config.CoreAutoConfig

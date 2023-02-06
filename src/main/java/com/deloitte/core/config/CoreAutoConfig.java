@@ -9,6 +9,6 @@ import lombok.RequiredArgsConstructor;
 @Import({//
     WebClientConfig.class//
 })
-public class ApiAutoConfig {
+public class CoreAutoConfig {
 
 }
