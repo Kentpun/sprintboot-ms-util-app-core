@@ -19,7 +19,7 @@ public class WebClientConfig {
         .map(AppApiProp::getExt)
         .map(ext -> ext.get("payment-service"))
         .map(ApiProp::getUri)
-        .orElse("http://payment-service.default.svc.cluster.local:9000");
+        .orElse("http://payment-service.default.svc.cluster.local:80");
       return WebClient.builder()
                 .baseUrl(uri)
                 .build();
@@ -31,7 +31,7 @@ public class WebClientConfig {
         .map(AppApiProp::getExt)
         .map(ext -> ext.get("tokenization-service"))
         .map(ApiProp::getUri)
-        .orElse("http://tokenization-service.default.svc.cluster.local:9000");
+        .orElse("http://tokenization-service.default.svc.cluster.local:80");
       return WebClient.builder()
                 .baseUrl(uri)
                 .build();
