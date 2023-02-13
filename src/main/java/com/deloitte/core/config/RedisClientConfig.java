@@ -13,7 +13,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories
 public class RedisClientConfig {
 
-    @Value("pcidss.redis.cache.windows")
+    @Value("pcidss.redis.cache.windows.net")
     private String redisHost;
     @Value("6380")
     private int redisPort;
