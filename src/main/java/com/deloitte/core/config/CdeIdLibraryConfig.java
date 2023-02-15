@@ -14,9 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 
 @Configuration
-@Import({RedisClientConfig.class, CdeIdUtil.class})
+@Import({RedisClientConfig.class})
 public class CdeIdLibraryConfig {
-
     @Bean
     @ConditionalOnClass(CrudRepository.class)
     public CdeIdUtil cdeIdUtil(CrudRepository<CdeId, String> repository) {
