@@ -1,9 +1,6 @@
 package com.deloitte.core.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import java.io.Serializable;
@@ -11,6 +8,8 @@ import java.util.Date;
 
 @RedisHash("cdeId")
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Getter
 @Setter
 public class CdeId implements Serializable {
