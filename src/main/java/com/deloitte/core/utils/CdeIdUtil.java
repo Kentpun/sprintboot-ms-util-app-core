@@ -15,29 +15,34 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
-//@Configuration
-//@EntityScan("com.deloitte.core.entity.CdeId")
-//@EnableJpaRepositories("com.deloitte.core.redis.CdeIdRepository")
 @AllArgsConstructor
 public class CdeIdUtil {
 
     private final CrudRepository<CdeId, String> cdeIdRepository;
 
-    public String generateCdeId(String type){
+    public String generateCdeId(String type, Long timeToLive){
         CdeId.Type typeObj = CdeId.Type.valueOf(type);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         String dateTimeString = formatter.format(date);
-        CdeId cdeIdEntity = new CdeId(typeObj, dateTimeString);
+        CdeId cdeIdEntity = new CdeId(typeObj, dateTimeString, timeToLive);
         cdeIdRepository.save(cdeIdEntity);
 
         Optional<CdeId> storedCdeIdObj = cdeIdRepository.findById(cdeIdEntity.getUuid());
         return storedCdeIdObj.map(cdeId -> cdeId.getType().toString() + cdeId.getDateTimeString() + cdeId.getUuid()).orElse(null);
     }
 
+    public Date getExpiryDate(String cdeId){
+        String uuid = cdeId.substring(16);
+        Optional<CdeId> storedCdeIdObj = cdeIdRepository.findById(uuid);
+        Date date = new Date(System.currentTimeMillis() + storedCdeIdObj.get().getExpiration() * 1000);
+        return date;
+    }
+
     public boolean validateCdeId(String cdeId){
-        String uuid = cdeId.substring(14);
+        String uuid = cdeId.substring(16);
         Optional<CdeId> storedCdeIdObj = cdeIdRepository.findById(uuid);
         return storedCdeIdObj.isPresent();
     }

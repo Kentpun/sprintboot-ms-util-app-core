@@ -3,10 +3,12 @@ package com.deloitte.core.entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
+
 import java.io.Serializable;
 import java.util.Date;
 
-@RedisHash("cdeId")
+@RedisHash(value="cdeId")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -44,9 +46,13 @@ public class CdeId implements Serializable {
     @Id
     private String uuid;
 
-    public CdeId(Type type, String dateTimeString) {
+    @TimeToLive
+    private Long expiration;
+
+    public CdeId(Type type, String dateTimeString, Long timeToLive) {
         this.type = type;
         this.dateTimeString = dateTimeString;
+        this.expiration = timeToLive;
     }
 
 }
