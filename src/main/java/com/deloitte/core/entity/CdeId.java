@@ -55,4 +55,9 @@ public class CdeId implements Serializable {
         this.expiration = timeToLive;
     }
 
+    public CdeId(Type type, String dateTimeString) {
+        this.type = type;
+        this.dateTimeString = dateTimeString;
+    }
+
 }
