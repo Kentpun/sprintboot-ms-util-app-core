@@ -7,7 +7,7 @@ import com.deloitte.core.config.prop.AppApiProp;
 
 @Configuration(proxyBeanMethods = false)
 @Import({//
-    WebClientConfig.class//
+    WebClientConfig.class
 })
 @EnableConfigurationProperties(AppApiProp.class)
 public class CoreAutoConfig {
