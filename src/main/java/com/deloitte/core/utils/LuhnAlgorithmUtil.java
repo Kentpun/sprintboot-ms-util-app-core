@@ -1,7 +1,5 @@
 package com.deloitte.core.utils;
 
-import java.util.Random;
-
 public class LuhnAlgorithmUtil {
     // Returns true if given
     // card number is valid
