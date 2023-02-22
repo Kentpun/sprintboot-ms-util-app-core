@@ -1,11 +1,9 @@
 package com.deloitte.core.exception;
 
+import java.util.Map;
 import com.deloitte.core.response.Response;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
