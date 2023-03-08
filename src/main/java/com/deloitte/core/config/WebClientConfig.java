@@ -36,4 +36,16 @@ public class WebClientConfig {
                 .baseUrl(uri)
                 .build();
     }
+
+    @Bean(name = "payment-orchestration-service")
+    public WebClient orchestrationServiceWebClient() {
+      String uri = Optional.ofNullable(appApiProp)
+        .map(AppApiProp::getExt)
+        .map(ext -> ext.get("payment-orchestration-service"))
+        .map(ApiProp::getUri)
+        .orElse("http://payment-orchestration-service.default.svc.cluster.local:80");
+      return WebClient.builder()
+                .baseUrl(uri)
+                .build();
+    }
 }
