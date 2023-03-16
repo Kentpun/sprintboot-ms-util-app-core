@@ -12,8 +12,8 @@ variables:
   buildId: '$(Build.BuildId)'
 
 stages:
-  - stage: SonarCloud Scanning
-    displayName: SonarCloud Scanning
+  - stage: SonarCloud_Scanning
+    displayName: SonarCloud_Scanning
     jobs:
       - job: Fetch
         displayName: Fetch
