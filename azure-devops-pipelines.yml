@@ -12,13 +12,36 @@ variables:
   buildId: '$(Build.BuildId)'
 
 stages:
+  - stage: SonarCloud Scanning
+    displayName: SonarCloud Scanning
+    jobs:
+      - job: Fetch
+        displayName: Fetch
+        steps:
+          - checkout: self
+            fetchDepth: 0
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: 'sonarcloud-app-core'
+              organization: 'axacde'
+              scannerMode: 'Other'
+              extraProperties: |
+                # Additional properties that will be passed to the scanner, 
+                # Put one key=value per line, example:
+                # sonar.exclusions=**/*.bin
+                sonar.projectKey=axacde_app-core
+                sonar.projectName=app-core
+          - task: SonarCloudAnalyze@1
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
   - stage: Build
     displayName: Build image
     jobs:
       - job: Build
         displayName: Build
         pool:
-          name: Private-agent-integration
+          name: PrivateAgent
         steps:
           - task: Bash@3
             displayName: Pipeline Preparation [env, m2, PATH]
