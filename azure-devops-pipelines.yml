@@ -15,12 +15,12 @@ stages:
   - stage: Build
     displayName: Build image
     pool:
-      name: Private-agent-experience
+      name: Private-agent-integration
     jobs:
       - job: Build
         displayName: Build
         pool:
-          name: Private-agent-experience
+          name: Private-agent-integration
         steps:
           - checkout: self
             fetchDepth: 0
