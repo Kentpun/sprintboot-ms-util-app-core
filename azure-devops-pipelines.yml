@@ -12,11 +12,15 @@ variables:
   buildId: '$(Build.BuildId)'
 
 stages:
-  - stage: SonarCloud_Scanning
-    displayName: SonarCloud_Scanning
+  - stage: Build
+    displayName: Build image
+    pool:
+      name: Private-agent-integration
     jobs:
-      - job: Fetch
-        displayName: Fetch
+      - job: Build
+        displayName: Build
+        pool:
+          name: Private-agent-integration
         steps:
           - checkout: self
             fetchDepth: 0
@@ -34,15 +38,7 @@ stages:
           - task: SonarCloudAnalyze@1
           - task: SonarCloudPublish@1
             inputs:
-              pollingTimeoutSec: '300'
-  - stage: Build
-    displayName: Build image
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          name: Private-agent-integration
-        steps:
+              pollingTimeoutSec: '300'          
           - task: Bash@3
             displayName: Pipeline Preparation [env, m2, PATH]
             inputs:
